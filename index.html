@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataSell PRO • ULTIMATE MINER VIEW</title>
+    <!-- Sound Effect Code Added Here -->
+    <audio id="clickSoundPlayer" src="https://files.catbox.moe/48kcyg.mp3" preload="auto"></audio>
+    <!-- Poppins Font Import -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- 1. Global Styles and Variables --- */
+        :root {
+            --neon-pink: #ff00ff; 
+            --neon-cyan: #00eaff; 
+            --deep-dark: #100028; 
+            --text-silver: #f0f0f0; 
+            --success-neon: #38ef7d; 
+            --error-neon: #ff6699; 
+            --font-main: 'Poppins', sans-serif;
+            --card-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--text-silver);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(180deg, #00000a 0%, var(--deep-dark) 100%);
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        .glass {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px); 
+            border-radius: 15px; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.5); 
+            transition: all 0.3s ease-out;
+        }
+
+        .neon-text-glow {
+            text-shadow: 0 0 4px var(--neon-cyan), 0 0 8px var(--neon-pink);
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- 2. Header and Wallet Panel (PROFESSIONAL) --- */
+        .header { padding: 10px 15px; background: rgba(0, 0, 0, 0.4); box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .header-left { display: flex; align-items: center; }
+        .logo { font-size: 20px; font-weight: 700; }
+        /* Profile Icon Button */
+        .profile-icon-btn { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--neon-cyan); margin-right: 10px; text-shadow: 0 0 5px var(--neon-cyan); padding: 0; }
+        
+        /* Professional Wallet Panel (Clickable) */
+        .wallet-panel { 
+            padding: 6px 15px; 
+            background: rgba(56, 239, 125, 0.15); 
+            border-radius: 30px; 
+            border: 1px solid var(--success-neon); 
+            box-shadow: 0 0 8px rgba(56, 239, 125, 0.6); 
+            font-size: 12px; 
+            margin-left: auto; 
+            font-weight: 700;
+            cursor: pointer; 
+        }
+        .balance-arrow { font-size: 14px; margin-left: 5px; }
+
+        /* --- 3. Main Dashboard Centerpiece (MINER STYLE) --- */
+        .dashboard { padding: 15px 15px; }
+        .center-monitor {
+            padding: 25px 25px; min-width: 100%; max-width: 450px; margin: 20px auto 30px; 
+            box-shadow: 0 0 15px rgba(0, 234, 255, 0.5), inset 0 0 8px rgba(0, 234, 255, 0.3); 
+            border: 3px solid var(--neon-cyan); background: rgba(0, 0, 0, 0.8); border-radius: 20px; text-align: left; 
+        }
+        
+        .monitor-heading { font-size: 14px; font-weight: 600; color: var(--neon-pink); border-bottom: 1px solid rgba(255, 0, 255, 0.3); padding-bottom: 5px; margin-bottom: 15px; }
+        
+        /* --- NEW MINER BALANCE STYLES --- */
+        .miner-display-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 5px 0; border-bottom: 1px dashed rgba(255, 255, 255, 0.1); }
+        .miner-display-row:last-child { border-bottom: none; }
+        .display-label { font-size: 12px; opacity: 0.7; color: var(--neon-cyan); }
+        .display-value { font-size: 30px; font-weight: 800; text-align: right; } 
+        .display-value-small { font-size: 16px; font-weight: 600; }
+        .usdt-value { color: var(--success-neon); text-shadow: 0 0 3px var(--success-neon), 0 0 6px var(--success-neon); }
+        
+        .live-data-meter-container { text-align: center; margin: 20px 0; padding: 10px; border-radius: 10px; background: rgba(0, 0, 0, 0.5); border: 1px solid var(--neon-cyan); }
+        .live-data-meter { font-size: 32px; font-weight: 700; color: var(--neon-pink); text-shadow: 0 0 3px var(--neon-pink), 0 0 8px var(--neon-pink); }
+        .data-rate-label { font-size: 11px; opacity: 0.6; display: block; margin-bottom: 5px; } 
+        .per-mb-price { font-size: 13px; color: var(--neon-cyan); opacity: 0.8; margin-top: 15px; }
+        .price-change.up { color: var(--success-neon); }
+        .price-change.down { color: var(--error-neon); }
+        
+        /* Daily Limit Indicator */
+        .daily-limit-container {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            border: 1px solid var(--neon-cyan);
+            text-align: center;
+        }
+        .daily-limit-text {
+            font-size: 12px;
+            color: var(--text-silver);
+            margin-bottom: 5px;
+        }
+        .daily-limit-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+        .daily-limit-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        .daily-limit-value {
+            font-size: 11px;
+            color: var(--neon-cyan);
+        }
+        /* ---------------------------------- */
+        
+        /* --- 4. Task & Earn Section (PREMIUM AND ENABLED) --- */
+        .section-heading { font-size: 18px; margin: 20px 0 10px; padding-bottom: 8px; }
+        .card-container { grid-template-columns: 1fr; max-width: 450px; margin: 0 auto 15px; display: grid; gap: 10px; } 
+        .task-card { padding: 15px; background: var(--deep-dark); border: 1px solid var(--neon-cyan); box-shadow: 0 0 5px var(--neon-cyan); cursor: pointer; }
+        .task-card:hover { transform: translateY(-2px); box-shadow: 0 0 10px var(--neon-cyan); background: rgba(0, 0, 0, 0.7); }
+        .task-card h3 { font-size: 14px; color: var(--neon-cyan); }
+        .task-card p { font-size: 10px; opacity: 0.8; }
+        .card-icon { font-size: 24px; color: var(--neon-cyan); float: left; margin-right: 10px; }
+        .active-label { background: var(--success-neon); color: var(--deep-dark); font-size: 10px; padding: 2px 5px; border-radius: 3px; }
+
+        /* --- Referral/Withdrawal Centers (Main Screen) --- */
+        .rw-center-container {
+            max-width: 450px; margin: 20px auto 30px; padding: 20px;
+            border: 2px solid; /* Border color set by JS/CSS class */
+            box-shadow: 0 0 15px; /* Shadow set by JS/CSS class */
+            background: rgba(16, 0, 40, 0.7);
+        }
+        .rw-center-container h2 { margin-bottom: 15px; font-size: 18px; border-bottom: 1px dashed rgba(255, 0, 255, 0.3); padding-bottom: 5px;}
+        
+        .rw-referral { border-color: var(--neon-pink); box-shadow: 0 0 15px var(--neon-pink); }
+        .rw-withdrawal { border-color: var(--neon-cyan); box-shadow: 0 0 15px var(--neon-cyan); }
+        
+        /* --- Future Features --- */
+        .future-features-heading { font-size: 16px; color: rgba(255, 255, 255, 0.6); font-weight: 600; margin-top: 30px; margin-bottom: 10px; text-align: left; max-width: 450px; margin-left: auto; margin-right: auto;}
+        
+        .coming-soon-card { padding: 15px; background: #3a005a; border: none; box-shadow: none; cursor: default; margin-bottom: 8px; border-radius: 10px; }
+        .coming-soon-card h3 { font-size: 18px; font-weight: 700; color: var(--text-silver); margin-bottom: 2px; }
+        .coming-soon-card p { font-size: 12px; color: rgba(255, 255, 255, 0.7); margin-bottom: 5px; }
+        .coming-soon-card span { font-size: 12px; font-weight: 500; color: var(--neon-pink); opacity: 0.8; display: block; }
+
+        /* --- 5. Custom: Wallet Dashboard/Forms (Sidebar) --- */
+        .wallet-dashboard { position: fixed; top: 0; left: -350px; width: 300px; max-width: 90%; height: 100%; background: rgba(16, 0, 40, 0.95); backdrop-filter: blur(20px); border-right: 2px solid var(--neon-pink); box-shadow: 5px 0 20px rgba(255, 0, 255, 0.5); padding: 20px; transition: left 0.3s ease-out; z-index: 1000; overflow-y: auto;}
+        .wallet-dashboard.open { left: 0; }
+        .wallet-dash-header { text-align: center; padding-bottom: 15px; margin-bottom: 20px; border-bottom: 1px solid rgba(255, 0, 255, 0.3); }
+        .wallet-dash-balance { font-size: 32px; font-weight: 700; color: var(--neon-pink); text-shadow: 0 0 5px var(--neon-pink); } 
+        .wallet-dash-button { display: block; width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid var(--neon-cyan); border-radius: 10px; background: rgba(0, 234, 255, 0.2); color: var(--text-silver); font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; text-align: left; }
+        
+        /* Withdrawal/Referral Content Container (Used for main screen switching) */
+        #withdrawal-content { padding: 10px; text-align: center; } /* Content area for RW views */
+        #withdrawal-content input { width: 100%; padding: 10px; margin-bottom: 15px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--neon-pink); color: var(--text-silver); border-radius: 5px; }
+        #withdrawal-content button { padding: 8px 20px; background: var(--success-neon); color: var(--deep-dark); border: none; border-radius: 5px; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+        #withdrawal-content button:hover { background: var(--success-neon); opacity: 0.9; }
+        
+        /* --- History Table Styles --- */
+        .history-table-container { margin-top: 15px; overflow-x: auto; max-height: 250px; }
+        .history-table { width: 100%; border-collapse: collapse; font-size: 11px; text-align: left; min-width: 400px; }
+        .history-table th, .history-table td { padding: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .history-table th { color: var(--neon-cyan); font-weight: 600; border-top: 1px solid rgba(255, 255, 255, 0.2); position: sticky; top: 0; background: rgba(16, 0, 40, 0.95); z-index: 10; }
+        .status-processing { color: var(--error-neon); font-weight: 700; }
+        .status-completed { color: var(--success-neon); font-weight: 700; }
+        
+        /* --- 6. Footer, Overlay, and Pop-up --- */
+        .footer { padding: 8px 0; font-size: 9px; opacity: 0.4; background: #000000; text-align: center;}
+        #overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: transparent; z-index: 999; display: none; }
+        .neon-side-bars { display: none; } 
+
+        /* Pop-up Ad Styling */
+        #popup-ad-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1001;
+            display: none; /* Hidden by default */
+            align-items: center;
+            justify-content: center;
+        }
+        .popup-content {
+            max-width: 85%;
+            width: 400px;
+            background: var(--deep-dark);
+            border: 3px solid var(--neon-pink);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 0 30px var(--neon-pink);
+            position: relative;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            color: var(--text-silver);
+            cursor: pointer;
+            opacity: 0.8;
+        }
+        
+        /* --- NEW REFERRAL STYLES --- */
+        .referral-link-container {
+            display: flex;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        .referral-link-input {
+            flex: 1;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 8px;
+            color: var(--text-silver);
+            font-size: 14px;
+        }
+        .copy-btn {
+            padding: 12px 20px;
+            background: var(--neon-cyan);
+            color: var(--deep-dark);
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .copy-btn:hover {
+            background: var(--neon-pink);
+            transform: scale(1.05);
+        }
+        .copy-btn.copied {
+            background: var(--success-neon);
+        }
+        
+        /* --- NEW WITHDRAWAL FORM STYLES --- */
+        .withdrawal-form {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--neon-cyan);
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--neon-cyan);
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 8px;
+            color: var(--text-silver);
+            font-size: 14px;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 10px var(--neon-pink);
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--success-neon);
+            color: var(--deep-dark);
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .submit-btn:hover {
+            background: var(--neon-cyan);
+            transform: translateY(-2px);
+        }
+        .balance-info {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            color: var(--text-silver);
+        }
+        .balance-info span {
+            color: var(--neon-pink);
+            font-weight: 700;
+        }
+        
+        /* --- Sidebar Ads Styles --- */
+        .sidebar-ad {
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid var(--error-neon);
+            border-radius: 5px;
+            text-align: center;
+            background: rgba(255, 102, 153, 0.05);
+        }
+        .sidebar-ad-label {
+            color: var(--error-neon);
+            font-size: 9px;
+            margin-bottom: 5px;
+            display: block;
+        }
+        
+        /* --- Special Pages Styles --- */
+        .special-page {
+            max-width: 450px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(16, 0, 40, 0.7);
+            border: 2px solid var(--neon-cyan);
+            border-radius: 15px;
+            box-shadow: 0 0 15px var(--neon-cyan);
+        }
+        .special-page h2 {
+            color: var(--neon-pink);
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 1px dashed rgba(255, 0, 255, 0.3);
+            padding-bottom: 8px;
+        }
+        .age-warning {
+            background: rgba(255, 0, 0, 0.2);
+            border: 1px solid var(--error-neon);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .age-warning h3 {
+            color: var(--error-neon);
+            margin-bottom: 10px;
+        }
+        .claim-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: var(--success-neon);
+            color: var(--deep-dark);
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 20px 0;
+            transition: all 0.3s;
+        }
+        .claim-button:hover {
+            background: var(--neon-pink);
+            transform: translateY(-3px);
+        }
+        .claim-button:disabled {
+            background: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.5);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* --- 18+ Ad Container --- */
+        .ad-container-18plus {
+            width: 100%;
+            height: 60px;
+            margin: 10px 0;
+            border: 1px solid var(--neon-pink);
+            border-radius: 5px;
+            overflow: hidden;
+            text-align: center;
+        }
+        .ad-reward-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: var(--neon-cyan);
+            color: var(--deep-dark);
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: all 0.3s;
+        }
+        .ad-reward-button:hover {
+            background: var(--neon-pink);
+            transform: translateY(-2px);
+        }
+        
+        /* Processing Time Info */
+        .processing-time {
+            background: rgba(0, 234, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 8px;
+            padding: 12px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        .processing-time h4 {
+            color: var(--neon-cyan);
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        .processing-time p {
+            color: var(--text-silver);
+            font-size: 12px;
+            margin: 0;
+        }
+    </style>
+</head>
+<body onload="loadAppState()">
+    
+    <!-- Overlay for closing panel on outside click -->
+    <div id="overlay" onclick="toggleWalletDashboard()"></div>
+
+    <!-- POP-UP AD OVERLAY -->
+    <div id="popup-ad-overlay" onclick="closePopupAd()">
+        <div class="popup-content" onclick="event.stopPropagation();">
+            <span class="close-btn" onclick="closePopupAd()">&times;</span>
+            <p style="font-size: 18px; color: var(--neon-cyan); margin-bottom: 10px;">💰 Special Offer Unlocked! 💰</p>
+            <p style="color: var(--success-neon); font-size: 24px; font-weight: 800; margin-bottom: 15px;">Click Now & Reward $0.10!</p>
+            
+            <!-- Ad Code -->
+            <script async="async" data-cfasync="false" src="//pl26185085.effectivegatecpm.com/1cbd33fe0044fc5331abcefaae5e86a3/invoke.js"></script>
+            <div id="container-1cbd33fe0044fc5331abcefaae5e86a3"></div>
+            
+            <p style="font-size: 12px; color: var(--text-silver); margin-top: 15px;">Click anywhere on this box or the 'X' to continue mining.</p>
+            <p style="font-size: 10px; color: var(--neon-pink); margin-top: 10px;">(This is a mock ad setup)</p>
+        </div>
+    </div>
+
+    <!-- Wallet Dashboard Panel (PROFILE - Sidebar) -->
+    <div class="wallet-dashboard" id="wallet-dashboard">
+        <div class="wallet-dash-header">
+            <p style="font-size: 18px; color: var(--text-silver);">User Profile & Wallet</p>
+            <p class="wallet-dash-balance" id="dash-balance">$5.00</p>
+            <small style="color: var(--neon-cyan);">Total USDT Balance</small>
+        </div>
+        
+        <!-- Navigation Buttons -->
+        <button class="wallet-dash-button" onclick="showDashboard(); playClickSound();">
+            🏠 Dashboard View
+        </button>
+        
+        <!-- New Referral Button (Goes to RW Center - Referral View) -->
+        <button class="wallet-dash-button" onclick="showReferralView(true); playClickSound();">
+            🔗 My Referrals & Link
+        </button>
+
+        <button class="wallet-dash-button" onclick="showWithdrawalForm('upi'); playClickSound();">
+            💵 Withdrawal (UPI)
+        </button>
+        
+        <!-- USDT Withdrawal Button (Goes to RW Center - Withdrawal View) -->
+        <button class="wallet-dash-button" onclick="showWithdrawalForm('usdt'); playClickSound();">
+            💎 USDT Withdrawal (Active)
+        </button>
+        
+        <button class="wallet-dash-button logout">
+            🚪 Logout
+        </button>
+        
+        <!-- Daily Limit Info in Sidebar -->
+        <div class="daily-limit-container" style="margin-top: 20px;">
+            <div class="daily-limit-text">Daily Earning Limit</div>
+            <div class="daily-limit-bar">
+                <div class="daily-limit-progress" id="sidebar-daily-progress" style="width: 0%;"></div>
+            </div>
+            <div class="daily-limit-value" id="sidebar-daily-value">$0.00 / $10.00</div>
+        </div>
+        
+        <!-- *** PROFILE PANEL ADS *** -->
+        <div style="height: 10px;"></div>
+        
+        <!-- Ad Slot 1 -->
+        <div class="sidebar-ad">
+            <span class="sidebar-ad-label">[ SPECIAL OFFER ]</span>
+            <!-- ADS Code Setup START (320x50 Banner) -->
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '7e39dd7ca7bd5dd7ee32586a5ef7f02a',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/7e39dd7ca7bd5dd7ee32586a5ef7f02a/invoke.js"></script>
+            <!-- ADS Code Setup END -->
+        </div>
+        
+        <!-- Ad Slot 2 -->
+        <div class="sidebar-ad">
+            <span class="sidebar-ad-label">[ PREMIUM OFFER ]</span>
+            <!-- ADS Code Setup START (320x50 Banner) -->
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '7e39dd7ca7bd5dd7ee32586a5ef7f02a',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/7e39dd7ca7bd5dd7ee32586a5ef7f02a/invoke.js"></script>
+            <!-- ADS Code Setup END -->
+        </div>
+        
+        <!-- Ad Slot 3 -->
+        <div class="sidebar-ad">
+            <span class="sidebar-ad-label">[ EXCLUSIVE DEAL ]</span>
+            <!-- ADS Code Setup START (320x50 Banner) -->
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '7e39dd7ca7bd5dd7ee32586a5ef7f02a',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/7e39dd7ca7bd5dd7ee32586a5ef7f02a/invoke.js"></script>
+            <!-- ADS Code Setup END -->
+        </div>
+        
+        <!-- Ad Slot 4 -->
+        <div class="sidebar-ad">
+            <span class="sidebar-ad-label">[ LIMITED TIME ]</span>
+            <!-- ADS Code Setup START (320x50 Banner) -->
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '7e39dd7ca7bd5dd7ee32586a5ef7f02a',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/7e39dd7ca7bd5dd7ee32586a5ef7f02a/invoke.js"></script>
+            <!-- ADS Code Setup END -->
+        </div>
+        
+        <!-- Ad Slot 5 -->
+        <div class="sidebar-ad">
+            <span class="sidebar-ad-label">[ BONUS REWARD ]</span>
+            <!-- ADS Code Setup START (320x50 Banner) -->
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '7e39dd7ca7bd5dd7ee32586a5ef7f02a',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/7e39dd7ca7bd5dd7ee32586a5ef7f02a/invoke.js"></script>
+            <!-- ADS Code Setup END -->
+        </div>
+    </div>
+
+
+    <!-- Header (App Style Top Bar) -->
+    <header class="header">
+        <div class="header-left">
+            <!-- Profile Icon Button (Toggles Dashboard) -->
+            <button class="profile-icon-btn" onclick="toggleWalletDashboard()">👤</button> 
+            <div class="logo">
+                <span class="neon-text-glow">DataSell</span>
+                <span style="font-size: 10px; font-weight: 500; opacity: 0.7; color: var(--neon-cyan);">PRO</span>
+            </div>
+        </div>
+        <!-- Professional Wallet Panel (Clickable - Toggles Dashboard) -->
+        <div class="wallet-panel" onclick="toggleWalletDashboard()">
+            <span id="header-usd-display">USD: $5.00</span>
+            <span class="balance-arrow">↑</span>
+        </div>
+    </header>
+
+    <!-- Main Dashboard Content -->
+    <main class="dashboard">
+
+        <!-- Live Monitor (MINER STYLE - USDT Focus) -->
+        <div class="glass center-monitor" id="live-monitor">
+            
+            <div class="monitor-heading">LIVE STREAMING CORE (USDT/DATA)</div>
+
+            <!-- USDT Total Balance Display (Matching $60.07 style with Pink Glow) -->
+            <div class="miner-display-row">
+                <span class="display-label">TOTAL USDT BALANCE</span>
+                <span class="display-value usdt-value" id="usd-total-balance" style="color: var(--neon-pink); text-shadow: 0 0 5px var(--neon-pink);">$5.00</span>
+            </div>
+            
+            <!-- USDT Earned This Session -->
+            <div class="miner-display-row">
+                <span class="display-label">USDT EARNED (SESSION)</span>
+                <span class="display-value-small usdt-value" id="wallet-counter">$0.0000</span>
+            </div>
+            
+            <!-- Data Rate Meter -->
+            <div class="live-data-meter-container">
+                <small class="data-rate-label">DATA STREAM RATE</small>
+                <span id="live-data-speed">0.0 MB/s</span>
+            </div>
+            
+            <div class="per-mb-price">
+                RATE: <span id="per-mb-value">$0.000045</span> / MB 
+                <span id="price-fluctuation" class="price-change up">↑</span>
+            </div>
+            
+            <!-- Daily Limit Indicator -->
+            <div class="daily-limit-container">
+                <div class="daily-limit-text">Daily Earning Limit</div>
+                <div class="daily-limit-bar">
+                    <div class="daily-limit-progress" id="daily-progress" style="width: 0%;"></div>
+                </div>
+                <div class="daily-limit-value" id="daily-value">$0.00 / $10.00</div>
+            </div>
+        </div>
+        
+        <!-- AD Slot 1: Header ke neeche -->
+        <div class="banner-ad-container" style="margin: 15px auto; height: 60px;">
+            <!-- ADS Code Setup START (320x50 Banner) -->
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '7e39dd7ca7bd5dd7ee32586a5ef7f02a',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/7e39dd7ca7bd5dd7ee32586a5ef7f02a/invoke.js"></script>
+            <!-- ADS Code Setup END -->
+        </div>
+        
+        <!-- Task & Earn Section (ACTIVE AND PREMIUM) -->
+        <h2 class="section-heading" id="main-heading" style="color: var(--neon-pink); border-bottom: 1px solid rgba(255, 0, 255, 0.2); ">ACTIVE MODULES</h2>
+        <section class="card-container" id="task-section">
+            <!-- Daily Claim (Manually Clickable) -->
+            <div class="glass task-card" onclick="showDailyClaimPage(); playClickSound();">
+                <span class="active-label" style="background: var(--error-neon); color: var(--deep-dark);">CLAIM NOW</span>
+                <div class="card-icon">💰</div>
+                <h3>Daily USDT Claim</h3>
+                <p>Access your recurring daily USDT bonus. (+$0.05)</p>
+            </div>
+            
+            <!-- Extreme Earn (Previously Passive Stream) -->
+            <div class="glass task-card" onclick="showExtremeEarnPage(); playClickSound();">
+                <span class="active-label" style="background: var(--success-neon);">ACTIVE</span>
+                <div class="card-icon">⚡</div>
+                <h3>Extreme Earn</h3>
+                <p>Maximum earning potential activated.</p>
+            </div>
+            
+            <!-- Referral Network (Clickable - directs to RW Center) -->
+            <div class="glass task-card" onclick="showReferralView(true);">
+                <span class="active-label" style="background: var(--neon-cyan); color: var(--deep-dark);">EARN 15%</span>
+                <div class="card-icon">🔗</div>
+                <h3>Referral Network</h3>
+                <p>Click to manage your referral panel.</p>
+            </div>
+
+            <!-- Incentive Box (Bonus) -->
+            <div class="glass task-card">
+                <span class="active-label" style="background: var(--success-neon);">BONUS</span>
+                <div class="card-icon">🎁</div>
+                <h3>Incentive Box</h3>
+                <p>Open for a guaranteed randomized prize pool.</p>
+            </div>
+        </section>
+
+        <!-- AD Slot 2: Task aur Future ke beech mein -->
+        <div class="banner-ad-container" style="margin-bottom: 10px;">
+             <!-- ADS Code Setup START (320x50 Banner) -->
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '7e39dd7ca7bd5dd7ee32586a5ef7f02a',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/7e39dd7ca7bd5dd7ee32586a5ef7f02a/invoke.js"></script>
+            <!-- ADS Code Setup END -->
+        </div>
+        
+        <!-- Referral Center (Visible when currentView is 'referral') -->
+        <div id="referral-center" class="rw-center-container rw-referral" style="display: none;">
+            <h2 style="color: var(--neon-pink);">Referral Network Center</h2>
+            <div id="referral-content">
+                <!-- Referral content loads here -->
+            </div>
+        </div>
+
+        <!-- Withdrawal Center (Visible when currentView is 'withdrawal') -->
+        <div id="withdrawal-center" class="rw-center-container rw-withdrawal" style="display: none;">
+            <h2 style="color: var(--neon-cyan);">Withdrawal (USDT)</h2>
+            <div id="withdrawal-content-main">
+                <!-- Withdrawal form/content loads here -->
+            </div>
+        </div>
+        
+        <!-- Extreme Earn Page (Visible when currentView is 'extreme-earn') -->
+        <div id="extreme-earn-page" class="special-page" style="display: none;">
+            <h2>Extreme Earn</h2>
+            
+            <!-- Top Ad -->
+            <div class="banner-ad-container" style="margin: 15px auto; height: 60px;">
+                <!-- ADS Code Setup START (320x50 Banner) -->
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '7e39dd7ca7bd5dd7ee32586a5ef7f02a',
+                        'format' : 'iframe',
+                        'height' : 50,
+                        'width' : 320,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/7e39dd7ca7bd5dd7ee32586a5ef7f02a/invoke.js"></script>
+                <!-- ADS Code Setup END -->
+            </div>
+            
+            <!-- Middle Ad -->
+            <div class="banner-ad-container" style="margin: 15px auto; height: 60px;">
+                <!-- ADS Code Setup START (320x50 Banner) -->
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '7e39dd7ca7bd5dd7ee32586a5ef7f02a',
+                        'format' : 'iframe',
+                        'height' : 50,
+                        'width' : 320,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/7e39dd7ca7bd5dd7ee32586a5ef7f02a/invoke.js"></script>
+                <!-- ADS Code Setup END -->
+            </div>
+            
+            <!-- Age Warning -->
+            <div class="age-warning">
+                <h3>⚠️ IMPORTANT NOTICE</h3>
+                <p style="color: var(--text-silver); font-size: 14px;">
+                    Users under 18 years of age are not permitted to click on links or participate in activities on this platform.
+                </p>
+                <p style="color: var(--neon-cyan); font-size: 12px; margin-top: 10px;">
+                    By continuing, you confirm that you are 18 years or older.
+                </p>
+            </div>
+            
+            <!-- 18+ Ad Link with Reward -->
+            <div style="text-align: center; margin: 20px 0;">
+                <p style="color: var(--neon-pink); font-size: 16px; margin-bottom: 10px;">Click the link below to earn $0.50!</p>
+                <p id="ad-clicks-counter" style="color: var(--neon-cyan); font-size: 14px; margin-bottom: 10px;">Today's clicks: 0/10</p>
+                <a href="https://www.effectivegatecpm.com/h3h0fvaa6?key=338e5cd6e3a988e14f2c368bcebdbd81" 
+                   target="_blank" 
+                   class="ad-reward-button"
+                   onclick="addAdReward()">
+                   🔥 Click Here to Earn $0.50 🔥
+                </a>
+                <div id="ad-reward-status" style="margin-top: 10px; color: var(--neon-cyan); font-size: 14px;"></div>
+            </div>
+            
+            <!-- Bottom Ad -->
+            <div class="banner-ad-container" style="margin: 15px auto; height: 60px;">
+                <!-- ADS Code Setup START (320x50 Banner) -->
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '7e39dd7ca7bd5dd7ee32586a5ef7f02a',
+                        'format' : 'iframe',
+                        'height' : 50,
+                        'width' : 320,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/7e39dd7ca7bd5dd7ee32586a5ef7f02a/invoke.js"></script>
+                <!-- ADS Code Setup END -->
+            </div>
+            
+            <button style="margin-top: 20px; padding: 12px 20px; background: var(--neon-cyan); color: var(--deep-dark); border: none; border-radius: 8px; font-weight: 700; cursor: pointer;" onclick="playClickSound(); showDashboard()">BACK TO DASHBOARD</button>
+        </div>
+        
+        <!-- Daily Claim Page (Visible when currentView is 'daily-claim') -->
+        <div id="daily-claim-page" class="special-page" style="display: none;">
+            <h2>Daily USDT Claim</h2>
+            
+            <!-- Top Ad -->
+            <div class="banner-ad-container" style="margin: 15px auto; height: 60px;">
+                <!-- ADS Code Setup START (320x50 Banner) -->
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '7e39dd7ca7bd5dd7ee32586a5ef7f02a',
+                        'format' : 'iframe',
+                        'height' : 50,
+                        'width' : 320,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/7e39dd7ca7bd5dd7ee32586a5ef7f02a/invoke.js"></script>
+                <!-- ADS Code Setup END -->
+            </div>
+            
+            <!-- Middle Ad -->
+            <div class="banner-ad-container" style="margin: 15px auto; height: 60px;">
+                <!-- ADS Code Setup START (320x50 Banner) -->
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '7e39dd7ca7bd5dd7ee32586a5ef7f02a',
+                        'format' : 'iframe',
+                        'height' : 50,
+                        'width' : 320,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/7e39dd7ca7bd5dd7ee32586a5ef7f02a/invoke.js"></script>
+                <!-- ADS Code Setup END -->
+            </div>
+            
+            <!-- Claim Button -->
+            <button id="daily-claim-btn" class="claim-button" onclick="processDailyClaim();">
+                CLAIM YOUR DAILY $0.05 USDT
+            </button>
+            
+            <!-- Claim Status -->
+            <div id="claim-status" style="text-align: center; margin: 15px 0; color: var(--neon-cyan); font-size: 14px;">
+                Ready to claim your daily bonus!
+            </div>
+            
+            <!-- Bottom Ad -->
+            <div class="banner-ad-container" style="margin: 15px auto; height: 60px;">
+                <!-- ADS Code Setup START (320x50 Banner) -->
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '7e39dd7ca7bd5dd7ee32586a5ef7f02a',
+                        'format' : 'iframe',
+                        'height' : 50,
+                        'width' : 320,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/7e39dd7ca7bd5dd7ee32586a5ef7f02a/invoke.js"></script>
+                <!-- ADS Code Setup END -->
+            </div>
+            
+            <button style="margin-top: 20px; padding: 12px 20px; background: var(--neon-cyan); color: var(--deep-dark); border: none; border-radius: 8px; font-weight: 700; cursor: pointer;" onclick="playClickSound(); showDashboard()">BACK TO DASHBOARD</button>
+        </div>
+        
+        <!-- Future Features Area (Image Style) -->
+        <h2 class="future-features-heading" style="color: var(--neon-cyan);">Future Integrations</h2>
+        <section class="card-container">
+            <!-- NFT Data Marketplace -->
+            <div class="coming-soon-card">
+                <h3>NFT Data Marketplace</h3>
+                <p>Tokenize and trade exclusive datasets.</p>
+                <span>Coming Soon</span>
+            </div>
+            
+            <!-- Weekly Auto Payout -->
+            <div class="coming-soon-card">
+                <h3>Weekly Auto Payout</h3>
+                <p>Scheduled direct wallet transfers.</p>
+                <span>Coming Soon</span>
+            </div>
+            
+            <!-- Premium Seller Plan -->
+            <div class="coming-soon-card">
+                <h3>Premium Seller Plan</h3>
+                <p>Unlock 2x rates and priority service.</p>
+                <span>Coming Soon</span>
+            </div>
+        </section>
+        
+        <!-- Placeholder for red mark below future features (Main Screen Mark 2 Area) -->
+        <div style="height: 15px;"></div>
+        
+        <!-- AD Slot 3: Footer ke upar -->
+        <div class="banner-ad-container" style="margin-bottom: 10px;">
+             <!-- ADS Code Setup START (320x50 Banner) -->
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '7e39dd7ca7bd5dd7ee32586a5ef7f02a',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/7e39dd7ca7bd5dd7ee32586a5ef7f02a/invoke.js"></script>
+            <!-- ADS Code Setup END -->
+        </div>
+
+        <!-- CONTENT AREA FOR REFERRAL/WITHDRAWAL (Hidden initially, populated by JS) -->
+        <div id="withdrawal-content" style="display: none;">
+            <!-- Content dynamically loaded here -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <!-- Footer text removed as requested -->
+    </footer>
+
+    <script>
+        // --- JAVASCRIPT CORE ---
+        
+        const clickSoundPlayer = document.getElementById('clickSoundPlayer');
+        function playClickSound() {
+            if (clickSoundPlayer) {
+                clickSoundPlayer.currentTime = 0;
+                clickSoundPlayer.play().catch(error => {
+                    console.log("Audio play failed (may require user interaction first):", error);
+                });
+            }
+        }
+        
+        // DOM Elements & Variables
+        const walletCounter = document.getElementById('wallet-counter'); 
+        const usdTotalBalanceEl = document.getElementById('usd-total-balance'); 
+        const headerUsdDisplayEl = document.getElementById('header-usd-display'); 
+        const perMbValue = document.getElementById('per-mb-value');
+        const priceFluctuation = document.getElementById('price-fluctuation');
+        const liveDataSpeedEl = document.getElementById('live-data-speed');
+        const dashBalanceEl = document.getElementById('dash-balance');
+        const walletDashboard = document.getElementById('wallet-dashboard');
+        const withdrawalContent = document.getElementById('withdrawal-content'); // Content area for RW views
+        const mainHeading = document.getElementById('main-heading');
+        const taskSection = document.getElementById('task-section');
+        const monitor = document.getElementById('live-monitor');
+        const overlay = document.getElementById('overlay');
+        const referralCenter = document.getElementById('referral-center'); // Referral container
+        const withdrawalCenter = document.getElementById('withdrawal-center'); // Withdrawal container
+        const referralContent = document.getElementById('referral-content'); // Referral content area
+        const withdrawalContentMain = document.getElementById('withdrawal-content-main'); // Withdrawal content area
+        const dailyProgress = document.getElementById('daily-progress');
+        const dailyValue = document.getElementById('daily-value');
+        const sidebarDailyProgress = document.getElementById('sidebar-daily-progress');
+        const sidebarDailyValue = document.getElementById('sidebar-daily-value');
+        const extremeEarnPage = document.getElementById('extreme-earn-page');
+        const dailyClaimPage = document.getElementById('daily-claim-page');
+        const dailyClaimBtn = document.getElementById('daily-claim-btn');
+        const claimStatus = document.getElementById('claim-status');
+        const adRewardStatus = document.getElementById('ad-reward-status');
+        const adClicksCounter = document.getElementById('ad-clicks-counter');
+
+        let sessionEarnedUSD = 0.00;
+        let totalBalance = 5.00; // Changed from 100.00 to 5.00
+        const MIN_UPI_WITHDRAWAL = 50.00; 
+        const MIN_USDT_WITHDRAWAL = 100.00; 
+        const MIN_WALLET_BALANCE = 5.00; // $5 minimum wallet balance
+        const REFERRAL_COMMISSION = 0.15; 
+        const DAILY_EARNING_LIMIT = 10.00; // $10 daily limit
+        const DAILY_CLAIM_AMOUNT = 0.05; // $0.05 daily claim
+        const WELCOME_BONUS = 5.00; // $5 welcome bonus
+        const AD_REWARD_AMOUNT = 0.50; // $0.50 ad reward
+        const MAX_DAILY_AD_CLICKS = 10; // Maximum 10 clicks per day
+        
+        // Generate unique referral link
+        function generateReferralLink() {
+            const userId = Math.random().toString(36).substring(2, 10).toUpperCase();
+            return `https://datasell.pro/register?ref=${userId}`;
+        }
+        
+        let myReferralLink = generateReferralLink(); 
+        let referralEarned = 0.00;
+        let perMbPrice = 0.000045; 
+        let dailyEarned = 0.00;
+        let lastEarningDate = null;
+        let dailyClaimed = false;
+        let lastClaimDate = null;
+        let welcomeBonusGiven = false;
+        let adRewardClaimed = false;
+        let dailyAdClicks = 0; // Track daily ad clicks
+        let lastAdClickDate = null; // Track last ad click date
+
+        let appState = {
+            totalBalance: 5.00, // Changed from 100.00 to 5.00
+            sessionEarnedUSD: 0.00,
+            referralEarned: 0.00,
+            withdrawalHistory: [],
+            dailyEarned: 0.00,
+            lastEarningDate: null,
+            dailyClaimed: false,
+            lastClaimDate: null,
+            welcomeBonusGiven: false,
+            adRewardClaimed: false,
+            dailyAdClicks: 0,
+            lastAdClickDate: null
+        };
+
+        let currentView = 'dashboard'; // 'dashboard', 'referral', 'withdrawal', 'extreme-earn', 'daily-claim'
+
+        function saveAppState() {
+            appState.totalBalance = totalBalance;
+            appState.sessionEarnedUSD = sessionEarnedUSD;
+            appState.referralEarned = referralEarned;
+            appState.dailyEarned = dailyEarned;
+            appState.lastEarningDate = lastEarningDate;
+            appState.dailyClaimed = dailyClaimed;
+            appState.lastClaimDate = lastClaimDate;
+            appState.welcomeBonusGiven = welcomeBonusGiven;
+            appState.adRewardClaimed = adRewardClaimed;
+            appState.dailyAdClicks = dailyAdClicks;
+            appState.lastAdClickDate = lastAdClickDate;
+            localStorage.setItem('dataSellAppState', JSON.stringify(appState));
+        }
+
+        function loadAppState() {
+            const savedState = localStorage.getItem('dataSellAppState');
+            if (savedState) {
+                const loaded = JSON.parse(savedState);
+                totalBalance = isNaN(loaded.totalBalance) ? 5.00 : loaded.totalBalance; // Changed from 100.00 to 5.00
+                sessionEarnedUSD = isNaN(loaded.sessionEarnedUSD) ? 0.00 : loaded.sessionEarnedUSD;
+                referralEarned = isNaN(loaded.referralEarned) ? 0.00 : loaded.referralEarned;
+                appState.withdrawalHistory = loaded.withdrawalHistory || [];
+                dailyEarned = isNaN(loaded.dailyEarned) ? 0.00 : loaded.dailyEarned;
+                lastEarningDate = loaded.lastEarningDate || null;
+                dailyClaimed = loaded.dailyClaimed || false;
+                lastClaimDate = loaded.lastClaimDate || null;
+                welcomeBonusGiven = loaded.welcomeBonusGiven || false;
+                adRewardClaimed = loaded.adRewardClaimed || false;
+                dailyAdClicks = loaded.dailyAdClicks || 0;
+                lastAdClickDate = loaded.lastAdClickDate || null;
+                
+                // Check if it's a new day
+                const today = new Date().toDateString();
+                if (lastEarningDate !== today) {
+                    dailyEarned = 0.00;
+                    lastEarningDate = today;
+                }
+                
+                // Check if daily claim should reset
+                if (lastClaimDate !== today) {
+                    dailyClaimed = false;
+                    lastClaimDate = today;
+                }
+                
+                // Check if daily ad clicks should reset
+                if (lastAdClickDate !== today) {
+                    dailyAdClicks = 0;
+                    lastAdClickDate = today;
+                }
+            } else {
+                // First time user - give welcome bonus
+                totalBalance = WELCOME_BONUS; // Changed from 100.00 + WELCOME_BONUS to just WELCOME_BONUS
+                sessionEarnedUSD = 0.00;
+                referralEarned = 0.00;
+                appState.withdrawalHistory = [];
+                dailyEarned = 0.00;
+                lastEarningDate = new Date().toDateString();
+                dailyClaimed = false;
+                lastClaimDate = new Date().toDateString();
+                welcomeBonusGiven = true;
+                adRewardClaimed = false;
+                dailyAdClicks = 0;
+                lastAdClickDate = new Date().toDateString();
+                
+                // Show welcome bonus message
+                setTimeout(() => {
+                    alert(`🎉 Welcome Bonus! You received $${WELCOME_BONUS.toFixed(2)} USDT!`);
+                }, 1000);
+            }
+
+            updateAllBalances(totalBalance, sessionEarnedUSD);
+            updateDailyLimitDisplay();
+            updateDailyClaimButton();
+            updateAdRewardButton();
+            showDashboard(false); 
+            startPopupAdTimer(); 
+        }
+
+        function updateAllBalances(newTotalUSD, newSessionUSD) {
+            usdTotalBalanceEl.textContent = `$${newTotalUSD.toFixed(2)}`;
+            dashBalanceEl.textContent = `$${newTotalUSD.toFixed(2)}`;
+            headerUsdDisplayEl.textContent = `USD: $${newTotalUSD.toFixed(2)}`;
+            walletCounter.textContent = `$${newSessionUSD.toFixed(4)}`;
+        }
+        
+        function updateDailyLimitDisplay() {
+            const progressPercentage = (dailyEarned / DAILY_EARNING_LIMIT) * 100;
+            dailyProgress.style.width = `${progressPercentage}%`;
+            dailyValue.textContent = `$${dailyEarned.toFixed(2)} / $${DAILY_EARNING_LIMIT.toFixed(2)}`;
+            
+            sidebarDailyProgress.style.width = `${progressPercentage}%`;
+            sidebarDailyValue.textContent = `$${dailyEarned.toFixed(2)} / $${DAILY_EARNING_LIMIT.toFixed(2)}`;
+            
+            // Change color if limit is reached
+            if (dailyEarned >= DAILY_EARNING_LIMIT) {
+                dailyProgress.style.background = 'var(--error-neon)';
+                sidebarDailyProgress.style.background = 'var(--error-neon)';
+            } else {
+                dailyProgress.style.background = 'linear-gradient(90deg, var(--neon-cyan), var(--neon-pink))';
+                sidebarDailyProgress.style.background = 'linear-gradient(90deg, var(--neon-cyan), var(--neon-pink))';
+            }
+        }
+        
+        function updateDailyClaimButton() {
+            if (dailyClaimed) {
+                dailyClaimBtn.disabled = true;
+                dailyClaimBtn.textContent = "ALREADY CLAIMED TODAY";
+                claimStatus.textContent = "You have already claimed your daily bonus today. Come back tomorrow!";
+                claimStatus.style.color = "var(--error-neon)";
+            } else {
+                dailyClaimBtn.disabled = false;
+                dailyClaimBtn.textContent = "CLAIM YOUR DAILY $0.05 USDT";
+                claimStatus.textContent = "Ready to claim your daily bonus!";
+                claimStatus.style.color = "var(--neon-cyan)";
+            }
+        }
+        
+        function updateAdRewardButton() {
+            if (adClicksCounter) {
+                adClicksCounter.textContent = `Today's clicks: ${dailyAdClicks}/${MAX_DAILY_AD_CLICKS}`;
+            }
+            
+            if (dailyAdClicks >= MAX_DAILY_AD_CLICKS) {
+                adRewardStatus.textContent = "Daily ad click limit reached! Come back tomorrow.";
+                adRewardStatus.style.color = "var(--error-neon)";
+            } else {
+                adRewardStatus.textContent = "Click the link above to earn $0.50!";
+                adRewardStatus.style.color = "var(--neon-cyan)";
+            }
+        }
+
+
+        function animateValue(element, start, end, duration, precision = 2, onComplete = null) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                
+                const newValue = start + progress * (end - start);
+                
+                if (element === walletCounter || element.id === 'referral-earned') {
+                     element.textContent = `$${newValue.toFixed(precision)}`;
+                } else {
+                     element.textContent = `$${newValue.toFixed(precision)}`;
+                }
+                
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                } else {
+                    if (onComplete) onComplete();
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        function updateLiveDataAndWallet() {
+            // Check if daily limit reached
+            if (dailyEarned >= DAILY_EARNING_LIMIT) {
+                liveDataSpeedEl.textContent = `0.0 MB/s`;
+                return;
+            }
+            
+            const units = ['KB', 'MB'];
+            const unit = units[Math.floor(Math.random() * units.length)];
+            let speed;
+            let earnedUSD;
+
+            if (unit === 'KB') {
+                speed = (Math.random() * 90 + 10).toFixed(1); 
+                earnedUSD = 0.00015 * (parseFloat(speed) / 50); 
+            } else { 
+                speed = (Math.random() * 9 + 1).toFixed(1); 
+                earnedUSD = 0.005 * (parseFloat(speed) / 4); 
+            }
+            
+            // Check if this earning would exceed daily limit
+            if (dailyEarned + earnedUSD > DAILY_EARNING_LIMIT) {
+                earnedUSD = DAILY_EARNING_LIMIT - dailyEarned;
+            }
+            
+            liveDataSpeedEl.textContent = `${speed} ${unit}/s`;
+            
+            if (earnedUSD > 0) {
+                const oldTotalUSD = totalBalance;
+                sessionEarnedUSD += earnedUSD;
+                dailyEarned += earnedUSD;
+                totalBalance += earnedUSD; 
+                
+                animateValue(walletCounter, sessionEarnedUSD - earnedUSD, sessionEarnedUSD, 1000, 4); 
+                animateValue(usdTotalBalanceEl, oldTotalUSD, totalBalance, 1000, 2);
+                animateValue(dashBalanceEl, oldTotalUSD, totalBalance, 1000, 2);
+                animateValue(headerUsdDisplayEl, oldTotalUSD, totalBalance, 1000, 2);
+                
+                updateDailyLimitDisplay();
+                saveAppState(); // Save after every earning update
+            }
+        }
+        
+        setInterval(updateLiveDataAndWallet, 1000);
+
+        function updatePerMbPrice() {
+            const fluctuation = (Math.random() - 0.5) * 0.000008; 
+            const newPrice = perMbPrice + fluctuation;
+            const isUp = newPrice > perMbPrice;
+            perMbPrice = Math.max(0.000030, newPrice); 
+            perMbValue.textContent = `$${perMbPrice.toFixed(6)}`;
+            priceFluctuation.textContent = isUp ? '↑' : '↓';
+            priceFluctuation.className = `price-change ${isUp ? 'up' : 'down'}`;
+        }
+        
+        setInterval(updatePerMbPrice, 3000);
+        
+        // --- EXTREME EARN PAGE ---
+        function showExtremeEarnPage() {
+            playClickSound();
+            
+            currentView = 'extreme-earn';
+            // Hide Dashboard elements
+            monitor.style.display = 'none';
+            mainHeading.style.display = 'none';
+            taskSection.style.display = 'none';
+            referralCenter.style.display = 'none';
+            withdrawalCenter.style.display = 'none';
+            dailyClaimPage.style.display = 'none';
+            extremeEarnPage.style.display = 'block'; // Show extreme earn page
+            
+            // Hide dashboard panel
+            walletDashboard.classList.remove('open');
+            overlay.style.display = 'none';
+            
+            updateAdRewardButton();
+        }
+        
+        // --- AD REWARD FUNCTION ---
+        function addAdReward() {
+            // Check daily ad click limit
+            if (dailyAdClicks >= MAX_DAILY_AD_CLICKS) {
+                alert("Daily ad click limit reached! You can click again tomorrow.");
+                return;
+            }
+            
+            // Add $0.50 to wallet
+            const reward = AD_REWARD_AMOUNT;
+            totalBalance += reward;
+            sessionEarnedUSD += reward;
+            dailyEarned += reward;
+            dailyAdClicks++;
+            lastAdClickDate = new Date().toDateString();
+
+            updateAllBalances(totalBalance, sessionEarnedUSD);
+            updateDailyLimitDisplay();
+            updateAdRewardButton();
+            saveAppState();
+
+            adRewardStatus.textContent = `Success! $${reward.toFixed(2)} USDT added to your wallet!`;
+            adRewardStatus.style.color = "var(--success-neon)";
+            
+            // Show success message
+            setTimeout(() => {
+                alert(`🎉 Ad Reward! You received $${reward.toFixed(2)} USDT!`);
+            }, 500);
+        }
+        
+        // --- DAILY CLAIM PAGE ---
+        function showDailyClaimPage() {
+            playClickSound();
+            
+            currentView = 'daily-claim';
+            // Hide Dashboard elements
+            monitor.style.display = 'none';
+            mainHeading.style.display = 'none';
+            taskSection.style.display = 'none';
+            referralCenter.style.display = 'none';
+            withdrawalCenter.style.display = 'none';
+            extremeEarnPage.style.display = 'none';
+            dailyClaimPage.style.display = 'block'; // Show daily claim page
+            
+            // Hide dashboard panel
+            walletDashboard.classList.remove('open');
+            overlay.style.display = 'none';
+            
+            updateDailyClaimButton();
+        }
+        
+        // --- DAILY CLAIM LOGIC ---
+        function processDailyClaim() {
+            // Check if daily limit reached
+            if (dailyEarned >= DAILY_EARNING_LIMIT) {
+                claimStatus.textContent = "Daily earning limit reached! Come back tomorrow.";
+                claimStatus.style.color = "var(--error-neon)";
+                return;
+            }
+            
+            // Check if already claimed today
+            if (dailyClaimed) {
+                claimStatus.textContent = "You have already claimed your daily bonus today. Come back tomorrow!";
+                claimStatus.style.color = "var(--error-neon)";
+                return;
+            }
+            
+            const bonusUSD = DAILY_CLAIM_AMOUNT;
+            
+            // Check if this bonus would exceed daily limit
+            const actualBonus = Math.min(bonusUSD, DAILY_EARNING_LIMIT - dailyEarned);
+            
+            totalBalance += actualBonus;
+            sessionEarnedUSD += actualBonus;
+            dailyEarned += actualBonus;
+            dailyClaimed = true;
+
+            updateAllBalances(totalBalance, sessionEarnedUSD);
+            updateDailyLimitDisplay();
+            updateDailyClaimButton();
+            saveAppState();
+
+            claimStatus.textContent = `Success! $${actualBonus.toFixed(2)} USDT added to your balance.`;
+            claimStatus.style.color = "var(--success-neon)";
+            
+            // Animate the claim button
+            dailyClaimBtn.style.background = "var(--neon-pink)";
+            setTimeout(() => {
+                dailyClaimBtn.style.background = "var(--success-neon)";
+            }, 500);
+        }
+
+        // --- REFERRAL LOGIC (Updates Main Content) ---
+        function showReferralView(isCardClick = false) {
+            if (isCardClick) playClickSound();
+            
+            currentView = 'referral';
+            // Hide Dashboard elements
+            monitor.style.display = 'none';
+            mainHeading.style.display = 'none';
+            taskSection.style.display = 'none';
+            withdrawalCenter.style.display = 'none';
+            extremeEarnPage.style.display = 'none';
+            dailyClaimPage.style.display = 'none';
+            referralCenter.style.display = 'block'; // Show referral container
+            
+            // Hide dashboard panel
+            walletDashboard.classList.remove('open');
+            overlay.style.display = 'none';
+
+            let referralHTML = `
+                <div style="margin-bottom: 20px;">
+                    <p style="font-size: 14px; color: var(--text-silver); margin-bottom: 10px;">Your Unique Referral Link:</p>
+                    <div class="referral-link-container">
+                        <input type="text" id="referral-link" class="referral-link-input" value="${myReferralLink}" readonly>
+                        <button id="copy-btn" class="copy-btn" onclick="copyReferralLink()">Copy Link</button>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(0, 0, 0, 0.5); padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px solid var(--neon-pink);">
+                    <p style="font-size: 14px; color: var(--neon-pink);">Commission Earned from Referrals:</p>
+                    <p style="font-size: 28px; font-weight: 800; color: var(--success-neon); margin-top: 5px;" id="referral-earned">$${referralEarned.toFixed(4)}</p>
+                    <p style="font-size: 11px; color: var(--text-silver);">Earn ${REFERRAL_COMMISSION * 100}% of their session earnings.</p>
+                </div>
+                
+                <div style="text-align: left; color: var(--text-silver); font-size: 14px; margin-top: 20px;">
+                    <span style="color: var(--neon-cyan);">How it works:</span>
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                        <li>Share your referral link with friends.</li>
+                        <li>They sign up and start earning.</li>
+                        <li>You get ${REFERRAL_COMMISSION * 100}% of their session earnings.</li>
+                    </ul>
+                </div>
+                
+                <button style="margin-top: 20px; padding: 12px 20px; background: var(--neon-pink); color: var(--deep-dark); border: none; border-radius: 8px; font-weight: 700; cursor: pointer;" onclick="playClickSound(); showDashboard()">BACK TO DASHBOARD</button>
+            `;
+            
+            referralContent.innerHTML = referralHTML;
+        }
+        
+        function copyReferralLink() {
+            const linkElement = document.getElementById('referral-link');
+            linkElement.select();
+            document.execCommand('copy');
+            
+            const copyBtn = document.getElementById('copy-btn');
+            if (copyBtn) {
+                copyBtn.textContent = "Copied!";
+                copyBtn.classList.add('copied');
+                setTimeout(() => {
+                    copyBtn.textContent = "Copy Link";
+                    copyBtn.classList.remove('copied');
+                }, 1500);
+            }
+        }
+
+        // --- Withdrawal Logic (Updates Main Content - Shows Form) ---
+        function showWithdrawalForm(type) {
+            
+            currentView = 'withdrawal';
+            
+            // Hide Dashboard elements
+            monitor.style.display = 'none';
+            mainHeading.style.display = 'none';
+            taskSection.style.display = 'none';
+            referralCenter.style.display = 'none';
+            extremeEarnPage.style.display = 'none';
+            dailyClaimPage.style.display = 'none';
+            withdrawalCenter.style.display = 'block'; // Show withdrawal container
+            
+            // Hide dashboard panel
+            walletDashboard.classList.remove('open');
+            overlay.style.display = 'none';
+
+            let formContent = '';
+            
+            if (type === 'upi') {
+                formContent = `
+                    <div class="withdrawal-form">
+                        <div class="form-group">
+                            <label for="upi-amount">Withdrawal Amount (Min $${MIN_UPI_WITHDRAWAL.toFixed(2)})</label>
+                            <input type="number" id="upi-amount" class="form-input" placeholder="Enter Amount" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="upi-id">UPI ID</label>
+                            <input type="text" id="upi-id" class="form-input" placeholder="Enter your UPI ID" required>
+                        </div>
+                        
+                        <button class="submit-btn" onclick="playClickSound(); submitUPIWithdrawal()">SUBMIT WITHDRAWAL</button>
+                        
+                        <div class="balance-info">
+                            Current Balance: <span>$${totalBalance.toFixed(2)}</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Processing Time Info -->
+                    <div class="processing-time">
+                        <h4>⏱️ Withdrawal Processing Time</h4>
+                        <p>Your withdrawal will be processed within 1 to 24 hours</p>
+                    </div>
+                    
+                    ${formatHistory()}
+                    
+                    <button style="margin-top: 20px; padding: 12px 20px; background: var(--neon-cyan); color: var(--deep-dark); border: none; border-radius: 8px; font-weight: 700; cursor: pointer;" onclick="playClickSound(); showDashboard()">BACK TO DASHBOARD</button>
+                `;
+            } else if (type === 'usdt') {
+                const processingRecords = appState.withdrawalHistory.filter(r => r.status === 'PROCESSING');
+
+                const processingStatusHTML = processingRecords.length > 0 ? `
+                    <div class="under-process-message" style="color: var(--error-neon); margin-top: 15px; font-size: 14px; border: 1px dashed var(--error-neon); padding: 10px; border-radius: 5px; background: rgba(255, 102, 153, 0.1);">
+                        🚀 ${processingRecords.length} WITHDRAWAL(S) PROCESSING.
+                    </div>
+                ` : '';
+                
+                formContent = `
+                    <div class="withdrawal-form">
+                        <div class="form-group">
+                            <label for="usdt-amount">Withdrawal Amount (Min $${MIN_USDT_WITHDRAWAL.toFixed(2)})</label>
+                            <input type="number" id="usdt-amount" class="form-input" placeholder="Enter Amount" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="usdt-address">USDT Wallet Address (TRC20/BP20)</label>
+                            <input type="text" id="usdt-address" class="form-input" placeholder="Enter your USDT Wallet Address" required>
+                        </div>
+                        
+                        <button class="submit-btn" onclick="playClickSound(); submitUSDTWithdrawal()">SUBMIT WITHDRAWAL</button>
+                        
+                        <div class="balance-info">
+                            Current Balance: <span>$${totalBalance.toFixed(2)}</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Processing Time Info -->
+                    <div class="processing-time">
+                        <h4>⏱️ Withdrawal Processing Time</h4>
+                        <p>Your withdrawal will be processed within 1 to 24 hours</p>
+                    </div>
+                    
+                    ${processingStatusHTML}
+                    
+                    ${formatHistory()}
+                    
+                    <button style="margin-top: 20px; padding: 12px 20px; background: var(--neon-cyan); color: var(--deep-dark); border: none; border-radius: 8px; font-weight: 700; cursor: pointer;" onclick="playClickSound(); showDashboard()">BACK TO DASHBOARD</button>
+                `;
+            }
+            withdrawalContentMain.innerHTML = formContent;
+        }
+
+        function submitUPIWithdrawal() {
+            const amountInput = document.getElementById('upi-amount');
+            const upiInput = document.getElementById('upi-id');
+            
+            const amount = parseFloat(amountInput.value);
+            const upiId = upiInput.value.trim();
+
+            if (isNaN(amount) || amount < MIN_UPI_WITHDRAWAL) {
+                alert(`Error: Minimum UPI withdrawal is $${MIN_UPI_WITHDRAWAL.toFixed(2)}.`);
+                return;
+            }
+
+            if (amount > totalBalance) {
+                alert("Error: Insufficient balance.");
+                return;
+            }
+
+            // Check minimum wallet balance requirement
+            if (totalBalance - amount < MIN_WALLET_BALANCE) {
+                alert(`Error: You must maintain a minimum balance of $${MIN_WALLET_BALANCE.toFixed(2)} in your wallet.`);
+                return;
+            }
+
+            if (!upiId.includes('@')) {
+                alert("Error: Invalid UPI ID format.");
+                return;
+            }
+
+            const deductedBalance = totalBalance - amount;
+            
+            appState.withdrawalHistory.unshift({
+                amount: amount,
+                type: 'UPI',
+                status: 'PROCESSING', // Always show as processing
+                date: new Date().toISOString(),
+                address: upiId
+            });
+
+            animateValue(usdTotalBalanceEl, totalBalance, deductedBalance, 1500, 2);
+            animateValue(dashBalanceEl, totalBalance, deductedBalance, 1500, 2);
+            animateValue(headerUsdDisplayEl, totalBalance, deductedBalance, 1500, 2);
+            
+            totalBalance = deductedBalance; 
+            saveAppState();
+            
+            setTimeout(() => {
+                showWithdrawalForm('upi');
+            }, 800);
+        }
+
+        function submitUSDTWithdrawal() {
+            const amountInput = document.getElementById('usdt-amount');
+            const addressInput = document.getElementById('usdt-address');
+            
+            const amount = parseFloat(amountInput.value);
+            const address = addressInput.value.trim();
+
+            if (isNaN(amount) || amount < MIN_USDT_WITHDRAWAL) {
+                alert(`Error: Minimum USDT withdrawal is $${MIN_USDT_WITHDRAWAL.toFixed(2)}.`);
+                return;
+            }
+
+            if (amount > totalBalance) {
+                alert("Error: Insufficient balance.");
+                return;
+            }
+
+            // Check minimum wallet balance requirement
+            if (totalBalance - amount < MIN_WALLET_BALANCE) {
+                alert(`Error: You must maintain a minimum balance of $${MIN_WALLET_BALANCE.toFixed(2)} in your wallet.`);
+                return;
+            }
+
+            if (address.length < 20) {
+                alert("Error: Invalid USDT address length.");
+                return;
+            }
+
+            const deductedBalance = totalBalance - amount;
+            
+            appState.withdrawalHistory.unshift({
+                amount: amount,
+                type: 'USDT (Network)',
+                status: 'PROCESSING', // Always show as processing
+                date: new Date().toISOString(),
+                address: address.substring(0, 10) + '...' // Show only partial address
+            });
+
+            animateValue(usdTotalBalanceEl, totalBalance, deductedBalance, 1500, 2);
+            animateValue(dashBalanceEl, totalBalance, deductedBalance, 1500, 2);
+            animateValue(headerUsdDisplayEl, totalBalance, deductedBalance, 1500, 2);
+            
+            totalBalance = deductedBalance; 
+            saveAppState();
+            
+            setTimeout(() => {
+                showWithdrawalForm('usdt');
+            }, 800);
+        }
+        
+        // --- Dashboard / View Management ---
+
+        function showDashboard(closeDashboard = true) {
+            currentView = 'dashboard';
+            // Show Dashboard elements
+            monitor.style.display = 'block';
+            mainHeading.style.display = 'block';
+            taskSection.style.display = 'grid';
+            
+            // Hide all other sections
+            referralCenter.style.display = 'none'; 
+            withdrawalCenter.style.display = 'none';
+            extremeEarnPage.style.display = 'none';
+            dailyClaimPage.style.display = 'none';
+            
+            if (closeDashboard) {
+                walletDashboard.classList.remove('open');
+                overlay.style.display = 'none';
+            }
+        }
+        
+        function formatHistory() {
+            if (appState.withdrawalHistory.length === 0) {
+                return '<p style="color: var(--neon-cyan); text-align: center; margin-top: 20px;">No Withdrawal History Found.</p>';
+            }
+
+            let rows = appState.withdrawalHistory.map(record => {
+                const status = 'PROCESSING'; // Always show as processing
+                const statusClass = 'status-processing';
+                const date = new Date(record.date).toLocaleDateString('en-IN', {day: '2-digit', month: 'short', year: 'numeric'});
+                
+                return `
+                    <tr>
+                        <td>${date}</td>
+                        <td style="color: var(--neon-pink);">$${record.amount.toFixed(2)}</td>
+                        <td>${record.type}</td>
+                        <td class="${statusClass}">${status}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            return `
+                <div style="text-align: left; color: var(--text-silver); font-size: 16px; margin-top: 15px; margin-bottom: 10px;">
+                    <span style="color: var(--neon-pink);">Transaction History</span>
+                </div>
+                <div class="history-table-container glass">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Method</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rows}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        // --- Toggles ---
+        function toggleWalletDashboard() {
+            const isOpen = walletDashboard.classList.toggle('open');
+            overlay.style.display = isOpen ? 'block' : 'none';
+            if (isOpen) {
+                playClickSound(); 
+                dashBalanceEl.textContent = `$${totalBalance.toFixed(2)}`;
+            }
+        }
+
+        // --- POP-UP AD LOGIC ---
+        const popupOverlay = document.getElementById('popup-ad-overlay');
+        let popupAdInterval;
+        const POPUP_DELAY = 50000; // 50 seconds for testing (50000 ms)
+
+        function showPopupAd() {
+            popupOverlay.style.display = 'flex';
+        }
+
+        function closePopupAd() {
+            playClickSound(); 
+            popupOverlay.style.display = 'none';
+            // Reset the interval timer when closed
+            clearInterval(popupAdInterval);
+            startPopupAdTimer();
+        }
+
+        function startPopupAdTimer() {
+            // Start the timer to show pop-up every 50 seconds
+            popupAdInterval = setInterval(showPopupAd, POPUP_DELAY);
+        }
+
+
+        // Initial setup
+        updatePerMbPrice();
+        // Removed the interval that changes withdrawal status to completed
+
+    </script>
+</body>
+</html>
